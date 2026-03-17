@@ -10,12 +10,6 @@ export default function Home() {
             Your NestJS Backend with Next.js Frontend is ready!
           </p>
           <div className="flex gap-4 justify-center">
-            <a
-              href="/register"
-              className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              Register
-            </a>
           </div>
         </div>
       </main>
