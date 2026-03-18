@@ -89,9 +89,9 @@ export class AuthService {
 
         try {
             await this.transporter.sendMail({
-                from: `"RCPF" <${process.env.SMTP_USER}>`,
+                from: `"RKS" <${process.env.SMTP_USER}>`,
                 to: email,
-                subject: 'Reset your RCPF account password',
+                subject: 'Reset your RKS account password',
                 html: `
           <p>Hi,</p>
           <p>Click the link below to reset your password (valid for 1 hour):</p>
