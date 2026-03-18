@@ -4,8 +4,8 @@ import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "RCPF Application",
-  description: "RCPF Frontend Application",
+  title: "RKS Application",
+  description: "RKS Frontend Application",
 };
 
 export default function RootLayout({
