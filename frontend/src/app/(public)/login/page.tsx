@@ -34,7 +34,7 @@ export default function LoginPage() {
                 }
             }
 
-            router.push('/dashboard');
+            router.push('/admin');
         } catch (err: any) {
             setError(err?.response?.data?.message || 'Login failed. Please try again.');
         } finally {
