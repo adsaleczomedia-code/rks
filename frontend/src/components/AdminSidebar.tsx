@@ -84,10 +84,10 @@ export default function AdminSidebar() {
                     <div className="p-4 border-t border-gray-100">
                         <Link
                             href="/"
-                            className="flex items-center px-4 py-3 text-sm font-semibold text-gray-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200"
+                            className="flex items-center px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200"
                         >
                             <LogOut size={20} className="mr-3" />
-                            Back to Website
+                            Logout
                         </Link>
                     </div>
                 </div>
