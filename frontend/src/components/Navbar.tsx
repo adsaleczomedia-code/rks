@@ -2,10 +2,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Search, Menu, X, ChevronDown, ChevronRight, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import api from "@/src/lib/api";
+import { useAuthStore } from "@/src/store/authStore";
 
 interface Product {
     id: number;
@@ -33,6 +35,9 @@ interface Category {
 const SUBCATEGORY_ONLY_CATEGORIES = ["Insurance", "EMI Calculator", "Credit Score"];
 
 export default function Navbar() {
+    const router = useRouter();
+    const logout = useAuthStore((s) => s.logout);
+    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -54,6 +59,17 @@ export default function Navbar() {
         };
         fetchCategories();
     }, []);
+
+    const handleLogout = () => {
+        logout();
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("rememberMe");
+            sessionStorage.removeItem("authSession");
+            localStorage.removeItem("user");
+            sessionStorage.removeItem("user");
+        }
+        router.push("/");
+    };
 
     const toggleMobileCategory = (id: number) => {
         setOpenMobileCategories(prev =>
@@ -202,13 +218,23 @@ export default function Navbar() {
                                     </button>
                                 )}
 
-                                {/* Desktop Login Button */}
-                                <Link
-                                    href="/login"
-                                    className="bg-[#5b52e3] text-white font-medium px-6 py-2.5 rounded-xl hover:bg-[#473ebd] transition-all shadow-md shadow-[#5b52e3]/20 active:scale-95 whitespace-nowrap"
-                                >
-                                    Log in
-                                </Link>
+                                {/* Desktop Login/Logout Button */}
+                                {isAuthenticated ? (
+                                    <button
+                                        onClick={handleLogout}
+                                        className="bg-red-500 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-red-600 transition-all shadow-md shadow-red-500/20 active:scale-95 whitespace-nowrap flex items-center gap-2"
+                                    >
+                                        <LogOut size={18} />
+                                        Logout
+                                    </button>
+                                ) : (
+                                    <Link
+                                        href="/login"
+                                        className="bg-[#5b52e3] text-white font-medium px-6 py-2.5 rounded-xl hover:bg-[#473ebd] transition-all shadow-md shadow-[#5b52e3]/20 active:scale-95 whitespace-nowrap"
+                                    >
+                                        Log in
+                                    </Link>
+                                )}
                             </div>
 
                             {/* Mobile Hamburger Button */}
@@ -338,14 +364,24 @@ export default function Navbar() {
                             </button>
                         </div>
 
-                        {/* Log in Button (Mobile) */}
-                        <Link
-                            href="/login"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="w-full block text-center bg-[#5b52e3] text-white font-medium text-lg py-3 rounded-xl hover:bg-[#473ebd] transition-all shadow-md shadow-[#5b52e3]/20"
-                        >
-                            Log in
-                        </Link>
+                        {/* Mobile Login/Logout Button */}
+                        {isAuthenticated ? (
+                            <button
+                                onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }}
+                                className="w-full flex items-center justify-center gap-2 bg-red-500 text-white font-medium text-lg py-3 rounded-xl hover:bg-red-600 transition-all shadow-md shadow-red-500/20"
+                            >
+                                <LogOut size={20} />
+                                Logout
+                            </button>
+                        ) : (
+                            <Link
+                                href="/login"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="w-full block text-center bg-[#5b52e3] text-white font-medium text-lg py-3 rounded-xl hover:bg-[#473ebd] transition-all shadow-md shadow-[#5b52e3]/20"
+                            >
+                                Log in
+                            </Link>
+                        )}
 
                     </div>
                 </div>

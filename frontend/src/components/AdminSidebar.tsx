@@ -1,19 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
     Tags,
     Package,
     Layers,
-    Settings,
     LogOut,
     Menu,
     X
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { useAuthStore } from "@/src/store/authStore";
 
 const menuItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -24,7 +24,22 @@ const menuItems = [
 
 export default function AdminSidebar() {
     const pathname = usePathname();
+    const router = useRouter();
+    const logout = useAuthStore((s) => s.logout);
     const [isOpen, setIsOpen] = useState(true);
+
+    const handleLogout = () => {
+        logout();
+
+        if (typeof window !== "undefined") {
+            localStorage.removeItem("rememberMe");
+            sessionStorage.removeItem("authSession");
+            localStorage.removeItem("user");
+            sessionStorage.removeItem("user");
+        }
+
+        router.push("/");
+    };
 
     return (
         <>
@@ -53,7 +68,6 @@ export default function AdminSidebar() {
                                 height={40}
                                 className="object-contain"
                             />
-                            {/* <span className="ml-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Portal</span> */}
                         </Link>
                     </div>
 
@@ -82,13 +96,13 @@ export default function AdminSidebar() {
 
                     {/* Bottom Area */}
                     <div className="p-4 border-t border-gray-100">
-                        <Link
-                            href="/"
-                            className="flex items-center px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200"
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center w-full px-4 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-200"
                         >
                             <LogOut size={20} className="mr-3" />
                             Logout
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </aside>
