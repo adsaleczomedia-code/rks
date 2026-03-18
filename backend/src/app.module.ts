@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import { typeOrmConfig } from './config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { CategoryModule } from './modules/Category/CategoryModule.js';
+import { SubCategoryModule } from './modules/SubCategory/SubCategoryModule.js';
+import { ProductModule } from './modules/Product/ProductModule.js';
 
 @Module({
   imports: [
@@ -18,6 +21,9 @@ import { UsersModule } from './modules/users/users.module';
     }),
     AuthModule,
     UsersModule,
+    CategoryModule,
+    SubCategoryModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
