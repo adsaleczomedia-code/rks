@@ -24,7 +24,7 @@ export default function RegisterPage() {
         try {
             setLoading(true);
             await registerFn(form);
-            router.push('/dashboard');
+            router.push('/admin');
         } catch (err: any) {
             setError(err?.response?.data?.message || 'Registration failed');
         } finally {

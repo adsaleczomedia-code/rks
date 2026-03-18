@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
-import Footer from "../components/footer ";
 
 export const metadata: Metadata = {
   title: "RCPF Application",
@@ -19,10 +17,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Navbar />
           {children}
           <Toaster position="top-right" />
-          <Footer />
         </Providers>
       </body>
     </html>
